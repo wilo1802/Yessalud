@@ -4,337 +4,163 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>YesSalu'D - Centro de Especialidades</title>
-  <meta name="description" content="YesSalu'D - Centro de Especialidades en Quito. Odontología, Psicología, Optometría, Estética, Medicina General, Pediatría, Laboratorio y Ambulancias." />
   <style>
-    :root{
-      --primary:#0d6efd;
-      --accent:#13c2c2;
-      --muted:#6c757d;
-      --bg:#f7f9fb;
-      --card:#ffffff;
-      --radius:14px;
-    }
-    *{box-sizing:border-box}
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
-      background: var(--bg);
-      color: #222;
-      -webkit-font-smoothing:antialiased;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #333;
     }
-    header{
-      background: linear-gradient(135deg,var(--primary), #2aa6ff);
+    header {
+      background: #0a74ff;
       color: white;
-      padding: 28px 20px;
-      text-align:center;
-      position:relative;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
-    header .logo{
-      display:flex;align-items:center;gap:16px;justify-content:center;
+    nav a {
+      margin: 0 15px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
     }
-    header img{width:80px;height:auto;border-radius:10px;box-shadow:0 6px 18px rgba(13,110,253,0.18)}
-    header h1{margin:0;font-size:1.6rem}
-    header p{margin:6px 0 0;opacity:0.95}
-
-    nav{display:flex;justify-content:center;gap:18px;padding:12px 16px;background:transparent;position:sticky;top:0;z-index:40}
-    nav a{color:white;text-decoration:none;font-weight:600;padding:8px 12px;border-radius:8px;opacity:0.95}
-    nav a:hover{background:rgba(255,255,255,0.08)}
-
-    .container{max-width:1100px;margin:0 auto;padding:20px}
-
-    .hero{padding:36px 20px;background:linear-gradient(180deg, rgba(233,242,255,0.6), transparent);border-radius:12px;margin-top:18px;text-align:center}
-    .hero h2{margin:0;font-size:1.5rem}
-    .hero p{margin:10px 0 0;color:var(--muted)}
-
-    /* grid */
-    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:20px}
-    .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:0 6px 18px rgba(22,35,50,0.06);transition:transform .28s ease,box-shadow .28s ease}
-    .card:hover{transform:translateY(-8px);box-shadow:0 12px 30px rgba(22,35,50,0.09)}
-    .card h3{margin:0 0 8px}
-    .card p{margin:0;color:var(--muted);line-height:1.4}
-    .card .more{display:inline-block;margin-top:12px;background:var(--primary);color:white;padding:8px 12px;border-radius:10px;text-decoration:none}
-
-    /* servicio detalle modal */
-    .modal{position:fixed;inset:0;background:rgba(0,0,0,0.45);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
-    .modal.open{opacity:1;pointer-events:auto}
-    .modal .panel{background:white;border-radius:12px;max-width:760px;width:100%;padding:20px}
-    .modal h3{margin-top:0}
-
-    /* responsive columns for hero + map */
-    .columns{display:grid;grid-template-columns:1fr 420px;gap:18px;margin-top:20px}
-    .map{height:300px;border-radius:12px;overflow:hidden}
-
-    /* equipo y nosotros */
-    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-    .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
-    .member{background:linear-gradient(180deg,#fff,#fbfdff);padding:12px;border-radius:12px;text-align:center}
-    .member img{width:68px;height:68px;border-radius:50%;object-fit:cover;margin-bottom:8px}
-
-    footer{background:linear-gradient(135deg,#0d6efd,#2aa6ff);color:white;padding:22px;border-radius:12px;margin:28px 20px 40px}
-    footer .cols{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between}
-    footer p,footer a{color:white;margin:4px 0}
-
-    /* quick actions */
-    .fab{position:fixed;right:20px;bottom:20px;z-index:60}
-    .fab a{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;box-shadow:0 8px 20px rgba(0,0,0,0.18);background:var(--accent);color:white;font-size:22px;text-decoration:none}
-    .call-btn{position:fixed;right:20px;bottom:90px;z-index:60}
-    .call-btn a{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;box-shadow:0 8px 20px rgba(0,0,0,0.18);background:var(--primary);color:white;font-size:20px;text-decoration:none}
-
-    /* chat styles */
-    #chatBox{display:none;position:fixed;bottom:160px;right:20px;width:330px;max-width:90%;background:white;border-radius:12px;box-shadow:0 12px 30px rgba(22,35,50,0.18);overflow:hidden;z-index:70}
-    #chatHeader{background:var(--primary);color:white;padding:10px 12px;font-weight:700}
-    #chatLog{height:320px;overflow:auto;padding:12px;background:#f8f9fb}
-    .bubble{padding:8px 10px;border-radius:10px;margin-bottom:10px;display:inline-block;max-width:82%}
-    .user{background:#e9f2ff;align-self:flex-end}
-    .bot{background:#fff}
-    #chatInputWrap{display:flex;border-top:1px solid #eee}
-    #chatInput{flex:1;padding:10px;border:none;outline:none}
-    #chatSend{background:var(--primary);color:white;border:none;padding:10px 14px;cursor:pointer}
-
-    /* small screens */
-    @media(max-width:880px){
-      .columns{grid-template-columns:1fr}
-      .container{padding:12px}
-      nav{gap:10px}
-      .about-grid{grid-template-columns:1fr}
-      header img{width:64px}
+    .hero {
+      padding: 80px 20px;
+      text-align: center;
+      background: linear-gradient(135deg,#0a74ff,#68b5ff);
+      color: white;
+    }
+    .services {
+      padding: 50px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: .3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .chat-icon {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: #0a74ff;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    #chatbox {
+      position: fixed;
+      right: 20px;
+      bottom: 90px;
+      width: 320px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      padding: 15px;
+      display: none;
+    }
+    #messages {
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .msg {
+      background: #e8f0ff;
+      padding: 8px;
+      border-radius: 8px;
+      margin: 5px 0;
+    }
+    .bot {
+      background: #cfe1ff;
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">
-      <img src="data:image/png;base64,1NTxUeobo5x9ZUtdHkcX3mQyoKR8Ij65Ht7+I5gTR809Iu1iHo81BM1p755mta5k...GOyWMtkMplMJpM5xmSxlslkMplMJnOM+f8DFLENfWDFcOEAAAAASUVORK5CYII=" alt="Logo YesSalu'D" />
-      <div>
-        <h1>YesSalu'D - Centro de Especialidades</h1>
-        <p>Odontología • Psicología • Optometría • Estética • Medicina • Pediatría • Laboratorio • Ambulancias</p>
-      </div>
+<header>
+  <h2>YesSalu'D</h2>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#servicios">Servicios</a>
+    <a href="#equipo">Equipo</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+</header>
+
+<section class="hero" id="inicio">
+  <h1>Bienestar integral para toda la familia</h1>
+  <p>Atención profesional, humana y especializada.</p>
+</section>
+
+<section id="servicios">
+  <h2 style="text-align:center;margin-top:40px;">Nuestros Servicios</h2>
+  <div class="services">
+    <div class="card">
+      <h3>Odontología Integral</h3>
+      <p>Prevención, resinas, endodoncia, prótesis y estética dental.</p>
     </div>
-    <nav>
-      <a href="#inicio">Inicio</a>
-      <a href="#servicios">Servicios</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#equipo">Equipo</a>
-      <a href="#contacto">Contacto</a>
-    </nav>
-  </header>
-
-  <main class="container">
-    <section class="hero" id="inicio">
-      <h2>Bienestar integral para toda la familia</h2>
-      <p>Tratamientos profesionales y humanos — agenda tu cita y recibe atención de calidad en nuestras dos sedes en Quito.</p>
-    </section>
-
-    <div class="columns">
-      <section>
-        <h3 style="margin-top:18px">Nuestros servicios</h3>
-        <div class="services">
-          <article class="card" data-service="odontologia">
-            <h3>Odontología Integral</h3>
-            <p>Limpiezas, resinas, endodoncias, prótesis, periodoncia y cirugía oral. Prevención y estética dental.</p>
-            <a class="more" href="#" data-open="odontologia">Más información</a>
-          </article>
-
-          <article class="card" data-service="psicologia">
-            <h3>Psicología Integral</h3>
-            <p>Terapias individuales, familiares y orientación para manejo de ansiedad, depresión y estrés.</p>
-            <a class="more" href="#" data-open="psicologia">Más información</a>
-          </article>
-
-          <article class="card" data-service="optometria">
-            <h3>Optometría</h3>
-            <p>Exámenes visuales, adaptación de lentes y detección temprana de condiciones oculares.</p>
-            <a class="more" href="#" data-open="optometria">Más información</a>
-          </article>
-
-          <article class="card" data-service="estetica">
-            <h3>Estética</h3>
-            <p>Tratamientos faciales, limpieza profunda, rejuvenecimiento y cuidado profesional de la piel.</p>
-            <a class="more" href="#" data-open="estetica">Más información</a>
-          </article>
-
-          <article class="card" data-service="medicina">
-            <h3>Medicina General</h3>
-            <p>Consultas, diagnóstico temprano y manejo de enfermedades crónicas.</p>
-            <a class="more" href="#" data-open="medicina">Más información</a>
-          </article>
-
-          <article class="card" data-service="pediatria">
-            <h3>Pediatría</h3>
-            <p>Controles de crecimiento, vacunas y atención integral para niñas y niños.</p>
-            <a class="more" href="#" data-open="pediatria">Más información</a>
-          </article>
-
-          <article class="card" data-service="lab">
-            <h3>Laboratorio Clínico</h3>
-            <p>Exámenes de sangre, orina, perfiles hormonales y pruebas especiales con resultados confiables.</p>
-            <a class="more" href="#" data-open="lab">Más información</a>
-          </article>
-
-          <article class="card" data-service="ambulancia">
-            <h3>Servicio de Ambulancias</h3>
-            <p>Traslados de emergencia 24/7 y atención prehospitalaria por personal capacitado.</p>
-            <a class="more" href="#" data-open="ambulancia">Más información</a>
-          </article>
-        </div>
-      </section>
-
-      <aside class="map">
-        <iframe src="https://www.google.com/maps?q=Rumipamba+Oe1-116+Quito&output=embed" style="border:0;width:100%;height:100%" allowfullscreen="" loading="lazy"></iframe>
-      </aside>
+    <div class="card">
+      <h3>Psicología</h3>
+      <p>Terapias individuales, familiares y manejo emocional.</p>
     </div>
-
-    <!-- Nosotros y Equipo -->
-    <section id="nosotros" style="margin-top:22px">
-      <div class="about-grid">
-        <div class="card">
-          <h3>Sobre YesSalu'D</h3>
-          <p>YesSalu'D nace para ofrecer atención integral en salud con equipos especializados y un enfoque humano. Nuestra misión es brindar cuidado accesible, seguro y de calidad para toda la familia.</p>
-        </div>
-        <div class="card">
-          <h3>Valores</h3>
-          <ul style="margin:6px 0 0;padding-left:18px;color:var(--muted)">
-            <li>Calidad</li>
-            <li>Empatía</li>
-            <li>Profesionalismo</li>
-            <li>Prevención</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="equipo" style="margin-top:18px">
-      <h3>Equipo Médico</h3>
-      <div class="team">
-        <div class="member card"><img src="https://via.placeholder.com/100" alt="Dr(a)."/><strong>Dr. Juan Pérez</strong><div style="color:var(--muted);font-size:13px">Odontólogo</div></div>
-        <div class="member card"><img src="https://via.placeholder.com/100" alt="Dr(a)."/><strong>Dra. María López</strong><div style="color:var(--muted);font-size:13px">Médico General</div></div>
-        <div class="member card"><img src="https://via.placeholder.com/100" alt="Dr(a)."/><strong>Lic. Ana Torres</strong><div style="color:var(--muted);font-size:13px">Psicóloga</div></div>
-        <div class="member card"><img src="https://via.placeholder.com/100" alt="Dr(a)."/><strong>Dr. Carlos Ruiz</strong><div style="color:var(--muted);font-size:13px">Pediatra</div></div>
-      </div>
-    </section>
-
-    <footer id="contacto">
-      <div class="cols">
-        <div>
-          <p><strong>Sedes</strong></p>
-          <p>Norte: Rumipamba Oe1-116, Edificio Célica, planta baja, entre Av. Atahualpa y Av. 10 de Agosto</p>
-          <p>Sur: Av. Mariscal Sucre y Av. Ajaví, junto a Farmacias Económicas, Quito, Ecuador</p>
-        </div>
-        <div>
-          <p><strong>Contacto</strong></p>
-          <p>Tel: <a href="tel:+593998176636">099 817 6636</a></p>
-          <p>Email: <a href="mailto:yessalud2@gmail.com">yessalud2@gmail.com</a></p>
-          <p>Horario: Lun-Sáb 08:00 - 18:00</p>
-        </div>
-      </div>
-      <p style="margin-top:12px;opacity:0.95">© 2025 YesSalu'D</p>
-    </footer>
-
-    <!-- modal template -->
-    <div id="modal" class="modal" aria-hidden="true">
-      <div class="panel">
-        <button id="closeModal" style="float:right;background:none;border:none;font-weight:700;font-size:18px;cursor:pointer">✕</button>
-        <div id="modalContent"></div>
-      </div>
+    <div class="card">
+      <h3>Medicina General</h3>
+      <p>Diagnóstico, tratamiento y control de salud.</p>
     </div>
-
-  </main>
-
-  <!-- WhatsApp & Call buttons -->
-  <div class="fab">
-    <a href="https://wa.me/593998176636" target="_blank" aria-label="WhatsApp">💬</a>
-  </div>
-  <div class="call-btn">
-    <a href="tel:+593998176636" aria-label="Llamar">📞</a>
-  </div>
-
-  <!-- Chat Assistant -->
-  <div id="chatBox">
-    <div id="chatHeader">Asistente YesSalu'D</div>
-    <div id="chatLog"></div>
-    <div id="chatInputWrap">
-      <input id="chatInput" placeholder="Escribe tu pregunta..." />
-      <button id="chatSend">Enviar</button>
+    <div class="card">
+      <h3>Laboratorio Clínico</h3>
+      <p>Exámenes con resultados confiables y rápidos.</p>
     </div>
   </div>
+</section>
 
-  <script>
-    // Service modals
-    const services = {
-      odontologia: {title:'Odontología Integral', text:'Atención completa: limpiezas, endodoncias, prótesis, ortodoncia y cirugías menores. Planes preventivos y estética dental.'},
-      psicologia: {title:'Psicología Integral', text:'Evaluaciones, terapias individuales y familiares, manejo de ansiedad, duelo y apoyo emocional.'},
-      optometria: {title:'Optometría', text:'Exámenes de la vista, adaptación de lentes y detección de patologías visuales.'},
-      estetica: {title:'Estética', text:'Tratamientos faciales y corporales, rejuvenecimiento y asesoría profesional para el cuidado de la piel.'},
-      medicina: {title:'Medicina General', text:'Consultas, controles, diagnóstico y manejo de patologías comunes y crónicas.'},
-      pediatria: {title:'Pediatría', text:'Controles de crecimiento, vacunación y atención integral infantil.'},
-      lab: {title:'Laboratorio Clínico', text:'Pruebas de laboratorio con resultados confiables para apoyar diagnósticos precisos.'},
-      ambulancia: {title:'Servicio de Ambulancias', text:'Traslados y atención prehospitalaria 24/7 con personal capacitado.'}
-    };
+<div class="chat-icon" onclick="toggleChat()">
+  <img src="https://cdn-icons-png.flaticon.com/512/893/893257.png" width="30" />
+</div>
 
-    document.querySelectorAll('[data-open]').forEach(btn=>{
-      btn.addEventListener('click',function(e){
-        e.preventDefault();
-        const key=this.getAttribute('data-open');
-        openModal(key);
-      })
-    });
+<div id="chatbox">
+  <h3>Asistente YesSalu'D</h3>
+  <div id="messages"></div>
+  <input type="text" id="input" placeholder="Escribe tu mensaje..." style="width:100%;padding:8px;border-radius:6px;">
+  <button onclick="sendMsg()" style="margin-top:8px;width:100%;padding:10px;background:#0a74ff;color:white;border:none;border-radius:8px;cursor:pointer;">Enviar</button>
+</div>
 
-    const modal=document.getElementById('modal');
-    const modalContent=document.getElementById('modalContent');
-    const closeModal=document.getElementById('closeModal');
-    function openModal(key){
-      const s=services[key];
-      modalContent.innerHTML=`<h3>${s.title}</h3><p style=\"color:var(--muted)\">${s.text}</p>`;
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden','false');
-    }
-    closeModal.addEventListener('click',()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true')});
-    modal.addEventListener('click',(e)=>{if(e.target===modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}});
+<script>
+function toggleChat(){
+  const c=document.getElementById('chatbox');
+  c.style.display = c.style.display==='block' ? 'none':'block';
+}
 
-    // Simple chat assistant (improved bubbles)
-    const chatLog=document.getElementById('chatLog');
-    const chatBox=document.getElementById('chatBox');
-    const chatInput=document.getElementById('chatInput');
-    const chatSend=document.getElementById('chatSend');
+function sendMsg(){
+  let box=document.getElementById("messages");
+  let text=document.getElementById("input").value;
+  if(!text) return;
+  box.innerHTML += `<div class='msg'>${text}</div>`;
+  document.getElementById("input").value="";
+  setTimeout(()=>{
+    box.innerHTML += `<div class='msg bot'>Gracias por escribir. ¿Cómo puedo ayudarte?</div>`;
+  },600);
+}
+</script>
 
-    function appendBubble(text, who){
-      const div=document.createElement('div');
-      div.className='bubble '+(who==='user'?'user':'bot');
-      div.innerHTML=text;
-      div.style.display='block';
-      chatLog.appendChild(div);
-      chatLog.scrollTop = chatLog.scrollHeight;
-    }
-
-    // open chat after small delay on first visit
-    setTimeout(()=>{chatBox.style.display='block';appendBubble('Hola 👋 Soy el asistente virtual de YesSalu\'D. ¿En qué puedo ayudarte hoy?','bot')},900);
-
-    chatSend.addEventListener('click',sendChat);
-    chatInput.addEventListener('keypress',function(e){if(e.key==='Enter')sendChat();});
-
-    function sendChat(){
-      const t=chatInput.value.trim();
-      if(!t) return;
-      appendBubble(t,'user');
-      chatInput.value='';
-      setTimeout(()=>{
-        appendBubble(generateAnswer(t),'bot');
-      },600);
-    }
-
-    function generateAnswer(msg){
-      const m=msg.toLowerCase();
-      if(m.includes('horario')||m.includes('abren')) return 'Nuestro horario es de lunes a sábado de 08:00 a 18:00.';
-      if(m.includes('ubicación')||m.includes('dónde')||m.includes('sede')) return 'Contamos con dos sedes: Norte (Rumipamba Oe1-116) y Sur (Av. Mariscal Sucre y Av. Ajaví) en Quito.';
-      if(m.includes('cita')||m.includes('agenda')) return 'Puedes agendar llamando al 099 817 6636 o por WhatsApp aquí: https://wa.me/593998176636';
-      if(m.includes('precio')||m.includes('costo')) return 'Los precios varían según el servicio. ¿Cuál servicio te interesa?';
-      if(m.includes('whatsapp')||m.includes('wa')) return 'Puedes escribirnos al WhatsApp: https://wa.me/593998176636';
-      if(m.includes('servicio')) return 'Ofrecemos odontología, psicología, optometría, estética, medicina general, pediatría, laboratorio y ambulancias.';
-      return 'Gracias por tu mensaje. Nuestro equipo te responderá pronto. También puedes llamar al 099 817 6636.';
-    }
-
-    // Smooth scroll for nav links
-    document.querySelectorAll('nav a').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const id=a.getAttribute('href');document.querySelector(id).scrollIntoView({behavior:'smooth'});})});
-  </script>
 </body>
 </html>
