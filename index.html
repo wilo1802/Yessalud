@@ -1,166 +1,317 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>YesSalu'D - Centro de Especialidades</title>
+  <meta name="description" content="YesSalu'D - Centro de Especialidades en Quito. Odontología, Psicología, Optometría, Estética, Medicina General, Pediatría, Laboratorio y Ambulancias."/>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #333;
-    }
-    header {
-      background: #0a74ff;
-      color: white;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    nav a {
-      margin: 0 15px;
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .hero {
-      padding: 80px 20px;
-      text-align: center;
-      background: linear-gradient(135deg,#0a74ff,#68b5ff);
-      color: white;
-    }
-    .services {
-      padding: 50px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      transition: .3s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-    .chat-icon {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      background: #0a74ff;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    #chatbox {
-      position: fixed;
-      right: 20px;
-      bottom: 90px;
-      width: 320px;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-      padding: 15px;
-      display: none;
-    }
-    #messages {
-      height: 200px;
-      overflow-y: auto;
-      border: 1px solid #ddd;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    .msg {
-      background: #e8f0ff;
-      padding: 8px;
-      border-radius: 8px;
-      margin: 5px 0;
-    }
-    .bot {
-      background: #cfe1ff;
+    :root{--primary:#0b4f8a;--accent:#7ad1ff;--bg:#f6fbff;--card:#fff;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#0f1724;background:var(--bg)}
+    header{background:linear-gradient(90deg,var(--primary),#0f7bc9);color:white;padding:18px 20px;position:sticky;top:0;z-index:60}
+    .container{max-width:1100px;margin:0 auto;padding:20px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .brand svg{width:56px;height:56px}
+    nav{margin-left:auto}
+    nav a{color:rgba(255,255,255,0.95);text-decoration:none;margin-left:18px;font-weight:600}
+
+    .hero{display:flex;gap:24px;align-items:center;padding:40px 0}
+    .hero-left{flex:1}
+    .hero h1{margin:0;font-size:2rem}
+    .hero p{color:var(--muted);margin-top:10px}
+    .cta{margin-top:18px}
+    .btn{background:white;color:var(--primary);padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;display:inline-block}
+
+    .hero-art{width:360px;max-width:40%;}
+
+    /* stats + charts */
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;margin-top:22px}
+    .card{background:var(--card);padding:18px;border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.06)}
+    .stat{font-size:1.6rem;font-weight:700}
+    .muted{color:var(--muted)}
+
+    /* services */
+    .services{margin-top:26px}
+    .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+    .service{background:linear-gradient(180deg,#fff, #fbfdff);padding:16px;border-radius:12px;border:1px solid rgba(10,74,138,0.04);cursor:pointer;transition:transform .26s,box-shadow .26s}
+    .service:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(11,79,138,0.08)}
+    .service h4{margin:0 0 8px}
+    .service p{margin:0;color:var(--muted);font-size:14px}
+
+    /* equipo */
+    .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-top:18px}
+    .member{background:var(--card);padding:12px;border-radius:10px;text-align:center}
+
+    /* footer */
+    footer{background:linear-gradient(90deg,var(--primary),#0f7bc9);color:white;padding:22px;margin-top:26px}
+    footer .cols{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+
+    /* WhatsApp + Chat */
+    .whatsapp{position:fixed;right:20px;bottom:20px;z-index:120}
+    .whatsapp a{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:#25D366;color:white;font-size:24px;box-shadow:0 8px 22px rgba(0,0,0,0.18);text-decoration:none}
+
+    .chat-btn{position:fixed;right:92px;bottom:20px;z-index:120}
+    .chat-btn button{width:56px;height:56px;border-radius:50%;background:var(--primary);border:none;color:white;font-size:22px;box-shadow:0 8px 22px rgba(2,6,23,0.18);cursor:pointer}
+
+    #assistant{position:fixed;right:20px;bottom:92px;width:340px;background:var(--card);border-radius:12px;box-shadow:0 10px 30px rgba(2,6,23,0.12);overflow:hidden;display:none;z-index:130}
+    #assistant header{background:var(--primary);color:white;padding:12px;font-weight:700}
+    #assistant .body{padding:12px;height:320px;overflow:auto}
+    #assistant .input{display:flex;padding:12px;border-top:1px solid #eee}
+    #assistant input{flex:1;padding:10px;border-radius:8px;border:1px solid #e6eef9}
+    #assistant button{margin-left:8px;padding:10px 12px;border-radius:8px;border:none;background:var(--primary);color:white;cursor:pointer}
+
+    /* responsive */
+    @media(max-width:880px){
+      .hero{flex-direction:column;align-items:flex-start}
+      .hero-art{max-width:100%;width:100%}
+      header{padding:12px}
     }
   </style>
 </head>
 <body>
-<header>
-  <h2>YesSalu'D</h2>
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#servicios">Servicios</a>
-    <a href="#equipo">Equipo</a>
-    <a href="#contacto">Contacto</a>
-  </nav>
-</header>
+  <header>
+    <div class="container" style="display:flex;align-items:center">
+      <div class="brand">
+        <!-- simple SVG mark -->
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect width="100" height="100" rx="18" fill="#fff" opacity="0.06" />
+          <path d="M50 15c9 0 16 7 16 16s-7 16-16 16-16-7-16-16 7-16 16-16zM34 62c4-6 12-10 20-10s16 4 20 10v6H34v-6z" fill="white" opacity="0.95"/>
+        </svg>
+        <div style="margin-left:10px">
+          <div style="font-weight:800;letter-spacing:0.2px">YesSalu'D</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.9)">Centro de Especialidades</div>
+        </div>
+      </div>
+      <nav style="margin-left:auto">
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#estadisticas">Estadísticas</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+    </div>
+  </header>
 
-<section class="hero" id="inicio">
-  <h1>Bienestar integral para toda la familia</h1>
-  <p>Atención profesional, humana y especializada.</p>
-</section>
+  <main class="container">
+    <section class="hero" id="inicio">
+      <div class="hero-left">
+        <h1>Atención integral y humana para toda la familia</h1>
+        <p class="muted">Odontología • Psicología • Optometría • Estética • Medicina General • Pediatría • Laboratorio Clínico • Ambulancias</p>
+        <div class="cta">
+          <a class="btn" href="https://wa.me/593998176636" target="_blank">Agendar por WhatsApp</a>
+        </div>
 
-<section id="servicios">
-  <h2 style="text-align:center;margin-top:40px;">Nuestros Servicios</h2>
-  <div class="services">
-    <div class="card">
-      <h3>Odontología Integral</h3>
-      <p>Prevención, resinas, endodoncia, prótesis y estética dental.</p>
+        <div class="grid-3">
+          <div class="card">
+            <div class="stat">1,250</div>
+            <div class="muted">Pacientes atendidos (año)</div>
+          </div>
+          <div class="card">
+            <div class="stat">8</div>
+            <div class="muted">Especialidades</div>
+          </div>
+          <div class="card">
+            <div class="stat">24/7</div>
+            <div class="muted">Servicio Ambulancias</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-art">
+        <!-- friendly medical illustration (SVG) -->
+        <svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:100%">
+          <rect x="0" y="0" width="600" height="400" rx="18" fill="#eaf8ff" />
+          <g transform="translate(80,40)">
+            <circle cx="160" cy="80" r="60" fill="#cfeeff" />
+            <rect x="110" y="150" width="120" height="80" rx="12" fill="#fff" />
+            <path d="M40 200 q60 -80 160 -20" stroke="#7ad1ff" stroke-width="12" fill="none" stroke-linecap="round" />
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- services -->
+    <section class="services" id="servicios">
+      <h2 style="color:var(--primary);margin:0 0 12px">Servicios destacados</h2>
+      <p class="muted">Haz clic en una tarjeta para ver más detalles.</p>
+
+      <div class="services-grid" id="servicesGrid">
+        <!-- cards inserted by JS -->
+      </div>
+    </section>
+
+    <!-- statistics / charts -->
+    <section id="estadisticas" style="margin-top:28px">
+      <h2 style="color:var(--primary)">Estadísticas</h2>
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:18px;margin-top:12px;align-items:start">
+        <div class="card">
+          <canvas id="visitasChart" height="160"></canvas>
+        </div>
+        <div class="card">
+          <canvas id="mixChart" height="160"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- team -->
+    <section style="margin-top:28px">
+      <h2 style="color:var(--primary)">Equipo médico</h2>
+      <div class="team">
+        <div class="member card">Dr. Juan Pérez<br/><small class="muted">Odontólogo</small></div>
+        <div class="member card">Dra. María López<br/><small class="muted">Médico General</small></div>
+        <div class="member card">Lic. Ana Torres<br/><small class="muted">Psicóloga</small></div>
+        <div class="member card">Dr. Carlos Ruiz<br/><small class="muted">Pediatra</small></div>
+      </div>
+    </section>
+
+    <!-- contact -->
+    <section id="contacto" style="margin-top:28px">
+      <div style="display:flex;gap:18px;flex-wrap:wrap">
+        <div style="flex:1" class="card">
+          <h3>Contacta con nosotros</h3>
+          <p class="muted">Teléfono: <a href="tel:+593998176636">099 817 6636</a><br/>Email: <a href="mailto:yessalud2@gmail.com">yessalud2@gmail.com</a></p>
+        </div>
+        <div style="width:320px" class="card">
+          <h4>Sedes</h4>
+          <p class="muted"><strong>Norte:</strong> Rumipamba Oe1-116, Edif. Célica, planta baja<br/><strong>Sur:</strong> Av. Mariscal Sucre y Av. Ajaví (junto a Farmacias Económicas)</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <div>© 2025 YesSalu'D - Centro de Especialidades</div>
+        <div>Av. Mariscal Sucre • Quito • Ecuador</div>
+      </div>
     </div>
-    <div class="card">
-      <h3>Psicología</h3>
-      <p>Terapias individuales, familiares y manejo emocional.</p>
-    </div>
-    <div class="card">
-      <h3>Medicina General</h3>
-      <p>Diagnóstico, tratamiento y control de salud.</p>
-    </div>
-    <div class="card">
-      <h3>Laboratorio Clínico</h3>
-      <p>Exámenes con resultados confiables y rápidos.</p>
+  </footer>
+
+  <!-- WhatsApp & Chat buttons -->
+  <div class="whatsapp"><a href="https://wa.me/593998176636" title="WhatsApp" target="_blank">📱</a></div>
+  <div class="chat-btn"><button id="openAssist" aria-label="Asistente">💬</button></div>
+
+  <!-- assistant panel -->
+  <div id="assistant" role="dialog" aria-hidden="true">
+    <header>Asistente YesSalu'D</header>
+    <div class="body" id="assistantBody"></div>
+    <div class="input">
+      <input id="assistantInput" placeholder="Escribe el número o tu mensaje..." aria-label="mensaje" />
+      <button id="assistantSend">Enviar</button>
     </div>
   </div>
-</section>
 
-<div class="chat-icon" onclick="toggleChat()">
-  <img src="https://cdn-icons-png.flaticon.com/512/893/893257.png" width="30" />
-</div>
+  <script>
+    // Services data
+    const services = [
+      {id:'odontologia', title:'Odontología Integral', text:'Limpiezas, resinas, endodoncias, prótesis, periodoncia y cirugía oral.'},
+      {id:'psicologia', title:'Psicología Integral', text:'Terapias individuales, familiares y manejo de ansiedad y estrés.'},
+      {id:'optometria', title:'Optometría', text:'Exámenes visuales, adaptación de lentes y seguimiento ocular.'},
+      {id:'estetica', title:'Estética', text:'Tratamientos faciales, rejuvenecimiento y cuidado de la piel.'},
+      {id:'medicina', title:'Medicina General', text:'Consultas, diagnóstico precoz y manejo de enfermedades comunes.'},
+      {id:'pediatria', title:'Pediatría', text:'Controles de crecimiento, vacunas y atención integral infantil.'},
+      {id:'lab', title:'Laboratorio Clínico', text:'Hematología, química sanguínea, hormonas y pruebas específicas.'},
+      {id:'ambulancia', title:'Servicio de Ambulancias', text:'Traslados de emergencia 24/7 con personal capacitado.'}
+    ];
 
-<div id="chatbox">
-  <h3>Asistente YesSalu'D</h3>
-  <div id="messages"></div>
-  <input type="text" id="input" placeholder="Escribe tu mensaje..." style="width:100%;padding:8px;border-radius:6px;">
-  <button onclick="sendMsg()" style="margin-top:8px;width:100%;padding:10px;background:#0a74ff;color:white;border:none;border-radius:8px;cursor:pointer;">Enviar</button>
-</div>
+    const grid = document.getElementById('servicesGrid');
+    services.forEach(s=>{
+      const el = document.createElement('div');
+      el.className='service card';
+      el.innerHTML = `<h4>${s.title}</h4><p class=\"muted\">${s.text}</p>`;
+      el.addEventListener('click', ()=> openServiceModal(s));
+      grid.appendChild(el);
+    });
 
-<script>
-function toggleChat(){
-  const c=document.getElementById('chatbox');
-  c.style.display = c.style.display==='block' ? 'none':'block';
-}
+    function openServiceModal(s){
+      alert(s.title + "\n\n" + s.text);
+    }
 
-function sendMsg(){
-  let box=document.getElementById("messages");
-  let text=document.getElementById("input").value;
-  if(!text) return;
-  box.innerHTML += `<div class='msg'>${text}</div>`;
-  document.getElementById("input").value="";
-  setTimeout(()=>{
-    box.innerHTML += `<div class='msg bot'>Gracias por escribir. ¿Cómo puedo ayudarte?</div>`;
-  },600);
-}
-</script>
+    // Chart.js - sample data
+    const visitasCtx = document.getElementById('visitasChart').getContext('2d');
+    const visitasChart = new Chart(visitasCtx, {
+      type: 'line',
+      data: {
+        labels:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+        datasets:[{label:'Pacientes',data:[80,95,120,140,150,170,160,175,190,205,230,250],borderColor: 'rgba(11,79,138,0.95)',backgroundColor:'rgba(11,79,138,0.12)',tension:0.3}]
+      },
+      options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}}
+    });
 
+    const mixCtx = document.getElementById('mixChart').getContext('2d');
+    const mixChart = new Chart(mixCtx, {
+      type:'doughnut',
+      data:{labels:['Odontología','Medicina','Pediatría','Estética','Laboratorio'],datasets:[{data:[30,25,15,20,10],backgroundColor:['#0b4f8a','#1f78b4','#7ad1ff','#8bd3c7','#ffd27f']}]},
+      options:{plugins:{legend:{position:'bottom'}}}
+    });
+
+    // Assistant behavior
+    const openAssist = document.getElementById('openAssist');
+    const assistant = document.getElementById('assistant');
+    const assistantBody = document.getElementById('assistantBody');
+    const assistantInput = document.getElementById('assistantInput');
+    const assistantSend = document.getElementById('assistantSend');
+
+    openAssist.addEventListener('click', ()=>{
+      assistant.style.display = assistant.style.display === 'block' ? 'none':'block';
+      if(assistant.style.display === 'block'){
+        assistant.setAttribute('aria-hidden','false');
+        assistantBody.innerHTML = `<p class=\"msg bot\">👋 ¡Hola! Soy el asistente virtual de <strong>YesSalu'D</strong>. ¿Qué deseas hacer hoy?\n\n<b>1</b> Agendar una cita<br><b>2</b> Ver servicios<br><b>3</b> Consultar información del centro<br><b>4</b> Hablar con un asesor</p>`;
+        assistantInput.focus();
+      } else { assistant.setAttribute('aria-hidden','true'); }
+    });
+
+    function postMessage(text, cls=''){ // simple post
+      const d = document.createElement('div'); d.className='msg '+(cls||''); d.style.margin='8px 0'; d.textContent = text; assistantBody.appendChild(d); assistantBody.scrollTop = assistantBody.scrollHeight;
+    }
+
+    assistantSend.addEventListener('click', handleAssistantInput);
+    assistantInput.addEventListener('keypress', function(e){ if(e.key==='Enter') handleAssistantInput(); });
+
+    function handleAssistantInput(){
+      const v = assistantInput.value.trim();
+      if(!v) return;
+      postMessage('Tú: '+v,'');
+      assistantInput.value='';
+
+      // If user types number
+      const num = parseInt(v,10);
+      if(num===1){
+        postMessage('Bot: Perfecto — te preparo un mensaje para agendar una cita. Serás redirigido a WhatsApp.');
+        const pre = encodeURIComponent('Hola, quiero agendar una cita en YesSalu\'D. Mi nombre es: [tu nombre], preferencia de fecha y servicio: ');
+        window.open('https://wa.me/593998176636?text='+pre,'_blank');
+        return;
+      }
+      if(num===2){
+        postMessage('Bot: Te muestro nuestros servicios principales:');
+        services.slice(0,6).forEach(s=> postMessage('• '+s.title+' — '+s.text,'bot'));
+        return;
+      }
+      if(num===3){
+        postMessage('Bot: Nuestras sedes: Norte: Rumipamba Oe1-116, Edif. Célica; Sur: Av. Mariscal Sucre y Av. Ajaví. Tel: 099 817 6636','bot');
+        return;
+      }
+      if(num===4){
+        postMessage('Bot: Te conectaré con un asesor por WhatsApp. Abriendo chat...','bot');
+        const pre = encodeURIComponent('Hola, deseo hablar con un asesor de YesSalu\'D.');
+        window.open('https://wa.me/593998176636?text='+pre,'_blank');
+        return;
+      }
+      // otherwise generic answer
+      postMessage('Bot: Gracias por tu mensaje. Si quieres agendar, escribe 1. Para ver servicios escribe 2.','bot');
+    }
+
+    // small accessibility: close assistant with ESC
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') assistant.style.display='none'; });
+
+    // smooth scroll for nav links
+    document.querySelectorAll('nav a').forEach(a=>a.addEventListener('click', function(e){ e.preventDefault(); const id=this.getAttribute('href'); document.querySelector(id).scrollIntoView({behavior:'smooth'}); }));
+  </script>
 </body>
 </html>
