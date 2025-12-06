@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centro Médico YesSaluD</title>
+  <style>
+    :root{
+      --azul:#0a7fa4; --celeste:#e6f6fb; --oscuro:#0b1f2a; --verde:#0fb9b1;
+    }
+    *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+    body{margin:0;background:#f5f7fa;color:#333}
+    header{
+      background:linear-gradient(120deg,var(--azul),var(--verde));
+      color:#fff;padding:40px 20px;text-align:center
+    }
+    header img{max-width:180px}
+    header h1{margin:15px 0 5px;font-size:2.2rem}
+    header p{opacity:.95}
+
+    nav{background:#fff;display:flex;gap:20px;justify-content:center;padding:14px;position:sticky;top:0;z-index:10;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+    nav a{text-decoration:none;color:var(--oscuro);font-weight:600}
+
+    section{padding:60px 20px;max-width:1200px;margin:auto}
+    h2{text-align:center;color:var(--azul);margin-bottom:40px;font-size:2rem}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:25px}
+    .card{
+      background:#fff;border-radius:18px;padding:25px;text-align:center;
+      box-shadow:0 8px 20px rgba(0,0,0,.08);cursor:pointer;transition:.3s
+    }
+    .card:hover{transform:translateY(-6px)}
+    .card img{width:70px;margin-bottom:15px}
+    .card h3{margin:10px 0;color:var(--oscuro)}
+
+    .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+    .gallery img{width:100%;border-radius:18px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.1)}
+
+    .cta{
+      background:linear-gradient(120deg,var(--azul),var(--verde));
+      color:#fff;text-align:center;padding:60px 20px;border-radius:28px
+    }
+    .cta h2{color:#fff}
+    .btn{
+      display:inline-block;margin-top:20px;padding:14px 32px;background:#fff;
+      color:var(--azul);border-radius:30px;font-weight:700;text-decoration:none
+    }
+
+    footer{background:#0b1f2a;color:#fff;padding:40px 20px;margin-top:60px}
+    footer p{text-align:center;opacity:.85}
+
+    /* WhatsApp */
+    .whatsapp{
+      position:fixed;bottom:20px;right:20px;background:#25d366;color:#fff;
+      width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-size:30px;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.25);z-index:20
+    }
+
+    /* Modal */
+    .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);align-items:center;justify-content:center;z-index:30}
+    .modal img{max-width:90%;max-height:90%;border-radius:18px}
+  </style>
+</head>
+<body>
+
+<header id="inicio">
+  <img src="logo.png" alt="YesSaluD" />
+  <h1>Centro Médico YesSaluD</h1>
+  <p>Nos preocupamos por tu salud • Quito</p>
+</header>
+
+<nav>
+  <a href="#servicios">Servicios</a>
+  <a href="#galeria">Galería</a>
+  <a href="#ofertas">Ofertas</a>
+  <a href="#contacto">Contacto</a>
+</nav>
+
+<section id="servicios">
+  <h2>Especialidades Médicas</h2>
+  <div class="grid">
+    <div class="card"><h3>Odontología</h3><p>Tratamientos integrales</p></div>
+    <div class="card"><h3>Pediatría</h3><p>Cuidado infantil</p></div>
+    <div class="card"><h3>Psicología</h3><p>Salud mental</p></div>
+    <div class="card"><h3>Optometría</h3><p>Salud visual</p></div>
+    <div class="card"><h3>Estética</h3><p>Tratamientos faciales</p></div>
+    <div class="card"><h3>Laboratorio</h3><p>Exámenes clínicos</p></div>
+  </div>
+</section>
+
+<section id="galeria">
+  <h2>Nuestras Actividades</h2>
+  <div class="gallery">
+    <img src="1.jpg" onclick="openModal(this.src)">
+    <img src="2.jpg" onclick="openModal(this.src)">
+    <img src="3.jpg" onclick="openModal(this.src)">
+    <img src="4.jpg" onclick="openModal(this.src)">
+    <img src="5.jpg" onclick="openModal(this.src)">
+    <img src="6.jpg" onclick="openModal(this.src)">
+    <img src="7.jpg" onclick="openModal(this.src)">
+    <img src="8.jpg" onclick="openModal(this.src)">
+    <img src="9.jpg" onclick="openModal(this.src)">
+  </div>
+</section>
+
+<section id="ofertas">
+  <div class="cta">
+    <h2>Promociones y Black Days</h2>
+    <p>Descuentos especiales en odontología, psicología y estética</p>
+    <a class="btn" href="#contacto">Agenda tu cita</a>
+  </div>
+</section>
+
+<section id="contacto">
+  <h2>Contacto</h2>
+  <p style="text-align:center">📍 Rumipamba y Av. 10 de Agosto – Edificio Célica (planta baja)</p>
+  <p style="text-align:center">📞 0998176636 • 02 5155749</p>
+</section>
+
+<footer>
+  <p>© 2025 Centro Médico YesSaluD – Vive Saludable</p>
+</footer>
+
+<a class="whatsapp" href="https://wa.me/593998176636" target="_blank">💬</a>
+
+<div class="modal" id="modal" onclick="closeModal()">
+  <img id="modalImg" />
+</div>
+
+<script>
+  function openModal(src){
+    document.getElementById('modal').style.display='flex';
+    document.getElementById('modalImg').src=src;
+  }
+  function closeModal(){document.getElementById('modal').style.display='none';}
+</script>
+
+</body>
+</html>
